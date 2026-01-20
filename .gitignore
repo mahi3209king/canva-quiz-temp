@@ -1,0 +1,7 @@
+node_modules
+out
+public/audio/*.mp3
+.env
+.DS_Store
+dist
+.cache

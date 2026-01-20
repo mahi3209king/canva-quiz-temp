@@ -1,0 +1,35 @@
+[
+    {
+        "question": "Which planet is known as the Red Planet?",
+        "options": [
+            "Earth",
+            "Mars",
+            "Jupiter",
+            "Saturn"
+        ],
+        "correctIndex": 1,
+        "category": "Space"
+    },
+    {
+        "question": "What is the capital of France?",
+        "options": [
+            "London",
+            "Berlin",
+            "Paris",
+            "Madrid"
+        ],
+        "correctIndex": 2,
+        "category": "Geography"
+    },
+    {
+        "question": "Which animal is the fastest in the world?",
+        "options": [
+            "Lion",
+            "Cheetah",
+            "Eagle",
+            "Shark"
+        ],
+        "correctIndex": 1,
+        "category": "Nature"
+    }
+]
