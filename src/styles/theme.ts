@@ -16,9 +16,9 @@ export const THEME = {
 export const TIMING = {
   fps: 30,
   introDuration: 15,
-  timerDuration: 150, // 5 seconds
-  revealDuration: 90,  // 3 seconds
-  questionDuration: 240, // 150 + 90 = 8 seconds total per quiz
+  timerDuration: 180, // 6 seconds
+  revealDuration: 120,  // 4 seconds
+  questionDuration: 300, // 180 + 120 = 10 seconds total per quiz
   endCardDuration: 90, // 3 seconds for the end screen
   introHookDuration: 120, // 4 seconds for the intro hook
 };

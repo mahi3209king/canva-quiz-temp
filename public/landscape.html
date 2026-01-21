@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landscape Quiz Creator (16:9)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Outfit', sans-serif; background-color: #0d1223; color: white; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        
+        /* Landscape Mockup Styles */
+        #mockup-landscape {
+            width: 500px;
+            aspect-ratio: 16/9;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 40px 80px -12px rgba(0, 0, 0, 0.8);
+            border: 8px solid #1e293b;
+            margin: 0 auto;
+            background: radial-gradient(circle, #00a2ff 0%, #0066cc 100%);
+        }
+
+        .sidebar-mock {
+            width: 25px;
+            background: #0055aa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 8px;
+            font-weight: 900;
+        }
+
+        .mock-landscape-btn {
+            background: #ffbb00;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: 800;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+    </style>
+</head>
+<body class="p-6 md:p-10">
+    <div class="max-w-7xl mx-auto">
+        <nav class="flex justify-between items-center mb-10">
+            <div>
+                <h1 class="text-4xl font-black bg-gradient-to-r from-blue-400 to-indigo-600 bg-clip-text text-transparent">LONG FORM QUIZ</h1>
+                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mt-1">16:9 Widescreen Template</p>
+            </div>
+            <div class="flex gap-4">
+                <a href="/" class="px-5 py-2 rounded-full border border-slate-700 text-[10px] font-bold hover:bg-white/5 transition-all text-slate-400">SWITCH TO SHORTS</a>
+                <button onclick="fillSample()" class="px-5 py-2 rounded-full border border-blue-500/30 text-[10px] font-bold bg-blue-500/10 text-blue-400 hover:bg-blue-500/20">LOAD 16:9 SAMPLE</button>
+            </div>
+        </nav>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <!-- Left: Inputs -->
+            <div class="lg:col-span-7 space-y-8">
+                <section class="glass p-8 rounded-[40px]">
+                    <h2 class="text-lg font-black flex items-center gap-3 text-blue-400 mb-6">
+                        <span class="bg-blue-500/20 w-8 h-8 rounded-xl flex items-center justify-center text-sm text-blue-400">01</span>
+                        Question Data (JSON)
+                    </h2>
+                    <textarea id="quizData" class="w-full h-[500px] bg-slate-900/50 border border-slate-800 rounded-3xl p-6 text-sm font-mono text-blue-300 focus:outline-none focus:border-blue-500 transition-all shadow-inner" placeholder='Paste your questions here...'></textarea>
+                </section>
+
+                <div class="grid grid-cols-2 gap-6">
+                     <section class="glass p-6 rounded-[32px]">
+                        <h2 class="text-xs font-black uppercase text-slate-500 mb-4 tracking-tighter">BGM Audio</h2>
+                        <input type="file" id="bgm" accept="audio/*" class="w-full text-[10px] text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-black file:bg-blue-500/10 file:text-blue-400 hover:file:bg-blue-500/20 transition-all cursor-pointer">
+                    </section>
+                    <section class="glass p-6 rounded-[32px]">
+                         <h2 class="text-xs font-black uppercase text-slate-500 mb-4 tracking-tighter">Custom Hook</h2>
+                         <input type="text" id="introHook" class="w-full bg-slate-900/50 border border-slate-800 rounded-xl px-4 py-2 text-sm text-blue-300 focus:outline-none" placeholder="Optional Intro Message">
+                    </section>
+                </div>
+
+                <!-- Interactive Lines -->
+                <section class="glass p-8 rounded-[40px]">
+                    <h2 class="text-lg font-black flex items-center gap-3 text-blue-400 mb-6">
+                        <span class="bg-blue-500/20 w-8 h-8 rounded-xl flex items-center justify-center text-sm text-blue-400">02</span>
+                        Interactive Lines (Mid-Video)
+                    </h2>
+                    <div class="grid grid-cols-12 gap-6">
+                        <div class="col-span-8">
+                            <label class="block text-[10px] font-black text-slate-500 uppercase mb-2 tracking-widest pl-2">Speech Line</label>
+                            <input type="text" id="interactiveLine" class="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-sm text-blue-300 focus:outline-none focus:border-blue-500 transition-all shadow-inner" placeholder='e.g., "Hit like if you guessed 1st 4 questions right!"'>
+                        </div>
+                        <div class="col-span-4">
+                            <label class="block text-[10px] font-black text-slate-500 uppercase mb-2 tracking-widest pl-2">At Question #</label>
+                            <input type="number" id="interactiveQuestionIndex" class="w-full bg-slate-900/50 border border-slate-800 rounded-2xl px-5 py-4 text-sm text-blue-300 focus:outline-none focus:border-blue-500 transition-all shadow-inner" placeholder="e.g., 3" min="1">
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right: Preview & Render -->
+            <div class="lg:col-span-5 space-y-8">
+                <section class="glass p-8 rounded-[40px] flex flex-col items-center">
+                    <h2 class="text-lg font-black mb-8 text-blue-400 self-start italic">LIVE PREVIEW</h2>
+                    
+                    <div id="mockup-landscape" class="mb-10 flex">
+                        <!-- Left Sidebar -->
+                        <div class="sidebar-mock"><div class="rotate-[-90deg]">QUIZ MADNESS</div></div>
+                        
+                        <!-- Content -->
+                        <div class="flex-1 p-4 flex flex-col relative">
+                            <div class="flex gap-2 items-start mb-4">
+                                <div class="w-8 h-8 bg-yellow-400 rounded-lg flex items-center justify-center font-black text-black text-xs shadow-[0_2px_0_#b7900b]">1</div>
+                                <div class="flex-1 bg-orange-600 border-2 border-white rounded-xl py-2 px-3 text-center shadow-lg">
+                                    <div id="mock-question" class="text-[10px] font-black italic uppercase">WHICH PLANET IS CLOSEST TO THE SUN?</div>
+                                </div>
+                            </div>
+
+                            <div class="flex-1 flex gap-4">
+                                <!-- Image Area -->
+                                <div class="flex-[1.2] bg-white rounded-2xl p-1 shadow-2xl">
+                                    <div class="w-full h-full bg-black rounded-xl border border-white/20"></div>
+                                </div>
+                                <!-- Options Area -->
+                                <div class="flex-1 flex flex-col gap-2">
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-7 bg-purple-700 rounded-l-lg border-2 border-white border-r-0 flex items-center justify-center font-black text-[10px]">A</div>
+                                        <div class="flex-1 h-7 bg-yellow-400 rounded-r-lg border-2 border-white flex items-center px-2 text-[8px] font-black text-slate-800">Earth</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-7 bg-purple-700 rounded-l-lg border-2 border-white border-r-0 flex items-center justify-center font-black text-[10px]">B</div>
+                                        <div class="flex-1 h-7 bg-green-500 rounded-r-lg border-2 border-white flex items-center px-2 text-[8px] font-black text-slate-800">Mercury ✓</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-7 bg-purple-700 rounded-l-lg border-2 border-white border-r-0 flex items-center justify-center font-black text-[10px]">C</div>
+                                        <div class="flex-1 h-7 bg-yellow-400 rounded-r-lg border-2 border-white flex items-center px-2 text-[8px] font-black text-slate-800">Venus</div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <div class="w-8 h-7 bg-purple-700 rounded-l-lg border-2 border-white border-r-0 flex items-center justify-center font-black text-[10px]">D</div>
+                                        <div class="flex-1 h-7 bg-yellow-400 rounded-r-lg border-2 border-white flex items-center px-2 text-[8px] font-black text-slate-800">Mars</div>
+                                    </div>
+
+                                    <div class="mt-auto w-full h-4 bg-white/20 rounded-full border-2 border-white p-0.5">
+                                        <div class="w-[70%] h-full bg-green-500 rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Sidebar -->
+                        <div class="sidebar-mock"><div class="rotate-[90deg]">QUIZ MADNESS</div></div>
+                    </div>
+
+                    <div class="w-full space-y-6">
+                        <div class="p-4 bg-blue-500/5 rounded-2xl border border-blue-500/20">
+                            <p class="text-[10px] text-slate-500 font-bold uppercase mb-2">Selected Mode</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                                <span class="text-sm font-black italic">LANDSCAPE INDUSTRIAL 16:9</span>
+                            </div>
+                        </div>
+
+                        <button onclick="saveAndGenerate()" id="btnGen" class="w-full bg-gradient-to-r from-blue-500 to-indigo-700 hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] active:scale-95 text-white font-black py-6 rounded-[24px] text-xl transition-all flex items-center justify-center gap-4 relative overflow-hidden group">
+                           <div class="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                            <span id="spinner" class="hidden animate-spin h-5 w-5 border-4 border-white border-t-transparent rounded-full"></span>
+                            <span id="btnText">RENDER 16:9 HQ VIDEO</span>
+                        </button>
+                    </div>
+                </section>
+                
+                <div id="status" class="p-5 rounded-[24px] hidden text-center font-bold text-xs uppercase tracking-tighter"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function fillSample() {
+            const sample = [
+                {
+                    "question": "WHICH PLANET IS CLOSEST TO THE SUN?",
+                    "options": ["Earth", "Mercury", "Venus", "Mars"],
+                    "correctIndex": 1,
+                    "category": "Space",
+                    "image": "images/mercury-sample.jpg"
+                }
+            ];
+            document.getElementById('quizData').value = JSON.stringify(sample, null, 2);
+            document.getElementById('introHook').value = "Challenge your brain!";
+        }
+
+        async function saveAndGenerate() {
+            const btn = document.getElementById('btnGen');
+            const btnText = document.getElementById('btnText');
+            const spinner = document.getElementById('spinner');
+            const status = document.getElementById('status');
+            const quizData = document.getElementById('quizData').value;
+            const bgm = document.getElementById('bgm').files[0];
+
+            if (!quizData) return alert('Please enter quiz data!');
+
+            btn.disabled = true;
+            spinner.classList.remove('hidden');
+            btnText.innerHTML = 'PREPARING HQ ASSETS...';
+            status.innerHTML = '⚙️ SAVING CONFIGURATION...';
+            status.className = 'mt-4 p-4 rounded-2xl bg-blue-500/10 text-blue-400 block text-center animate-pulse';
+
+            try {
+                const formData = new FormData();
+                formData.append('data', JSON.stringify({ 
+                    questions: JSON.parse(quizData),
+                    templateId: 'landscape_industrial', // Special ID for 16:9
+                    endScreenMessage: "SUBSCRIBE FOR MORE!",
+                    introHook: document.getElementById('introHook').value,
+                    interactiveLine: document.getElementById('interactiveLine').value,
+                    interactiveQuestionIndex: parseInt(document.getElementById('interactiveQuestionIndex').value) || null
+                }));
+
+                if (bgm) formData.append('bgm', bgm);
+
+                const saveRes = await fetch('http://localhost:3001/api/save-quiz', { method: 'POST', body: formData });
+                const saveResult = await saveRes.json();
+                if (!saveResult.success) throw new Error(saveResult.error);
+
+                status.innerHTML = '🌀 GENERATING AI METADATA & VOICES...';
+                const renderRes = await fetch('http://localhost:3001/api/render', { method: 'POST' });
+                const renderResult = await renderRes.json();
+                if (!renderResult.success) throw new Error(renderResult.error);
+
+                status.innerHTML = '🏆 RENDER SUCCESSFUL! CHECK OUT FOLDER.';
+                status.className = 'mt-4 p-4 rounded-2xl bg-emerald-500/10 text-emerald-400 block text-center font-black';
+            } catch (err) {
+                status.innerHTML = '⚠️ ERROR: ' + err.message;
+                status.className = 'mt-4 p-4 rounded-2xl bg-red-500/10 text-red-500 block text-center';
+            } finally {
+                btn.disabled = false;
+                spinner.classList.add('hidden');
+                btnText.innerHTML = 'RENDER 16:9 HQ VIDEO';
+            }
+        }
+
+        fillSample();
+    </script>
+</body>
+</html>

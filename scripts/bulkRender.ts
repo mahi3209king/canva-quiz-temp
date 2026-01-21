@@ -18,11 +18,15 @@ const start = async () => {
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir);
 
   // --- 🎬 Render Full Quiz Video ---
-  console.log('🎬 Rendering Full Quiz Video...');
+  const config = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/data/config.json'), 'utf8'));
+  const isLandscape = config.templateId === 'landscape_industrial';
+  const compositionId = isLandscape ? 'FullLandscapeQuiz' : 'FullQuiz';
+
+  console.log(`🎬 Rendering Full Quiz Video (${isLandscape ? 'Landscape' : 'Shorts'})...`);
   const fullOutput = path.join(outDir, `full_quiz.mp4`);
   
   const fullComposition = await selectComposition({
-    id: 'FullQuiz',
+    id: compositionId,
     inputProps: {},
     serveUrl: bundleLocation,
   });
@@ -32,9 +36,9 @@ const start = async () => {
     serveUrl: bundleLocation,
     codec: 'h264',
     outputLocation: fullOutput,
-    // Note: concurrency is the correct property name
     concurrency: 8,
   });
+
 
   console.log(`✅ Success! Full Video: ${fullOutput}`);
   console.log('🎉 All tasks completed!');

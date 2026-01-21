@@ -20,6 +20,12 @@ async function main() {
       await generateTTS(config.introHook, 'intro_hook.mp3', 'gtts');
   }
 
+  // Generate Interactive Line if provided
+  if ((config as any).interactiveLine) {
+      console.log('🔊 Generating Interactive Line audio...');
+      await generateTTS((config as any).interactiveLine, 'interactive_line.mp3', 'gtts');
+  }
+
   for (let i = 0; i < quizzes.length; i++) {
     const quiz = quizzes[i];
     console.log(`- Generating Q${i+1}`);

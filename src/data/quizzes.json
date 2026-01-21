@@ -1,62 +1,26 @@
 [
   {
-    "question": "WHICH US PRESIDENT WAS A PROFESSIONAL WRESTLING PROMOTER?",
-    "Answer": "Donald Trump",
-    "category": "US Politics",
-    "image": "images/donald_trump_1768974319905.jpg"
+    "question": "WHICH PLANET IS CLOSEST TO THE SUN?",
+    "options": [
+      "Earth",
+      "Mercury",
+      "Venus",
+      "Mars"
+    ],
+    "correctIndex": 1,
+    "category": "Space",
+    "image": "images/mercury_1768993566855.jpg"
   },
   {
-    "question": "WHICH STATE PRODUCES THE MOST POPCORN IN THE US?",
-    "Answer": "Nebraska",
-    "category": "US Agriculture",
-    "image": "images/nebraska_1768974331876.jpg"
-  },
-  {
-    "question": "WHAT IS THE MOST COMMON PASSWORD IN THE US?",
-    "Answer": "123456",
-    "category": "Cyber Security",
-    "image": "images/123456_1768974339843.jpg"
-  },
-  {
-    "question": "WHICH US STATE HAS MORE SHORELINE THAN CALIFORNIA?",
-    "Answer": "Alaska",
-    "category": "US Geography",
-    "image": "images/alaska_1768974346980.jpg"
-  },
-  {
-    "question": "WHAT WAS THE FIRST FAST-FOOD CHAIN IN THE US?",
-    "Answer": "White Castle",
-    "category": "Food History",
-    "image": "images/white_castle_1768974354598.jpg"
-  },
-  {
-    "question": "WHICH AMERICAN CITY IS SLOWLY SINKING EVERY YEAR?",
-    "Answer": "New Orleans",
-    "category": "US Cities",
-    "image": "images/new_orleans_1768974365191.jpg"
-  },
-  {
-    "question": "WHAT IS THE OFFICIAL NATIONAL ANIMAL OF THE US?",
-    "Answer": "Bald Eagle",
-    "category": "US Symbols",
-    "image": "images/bald_eagle_1768974373742.jpg"
-  },
-  {
-    "question": "WHICH US STATE HAS THE MOST UFO SIGHTINGS?",
-    "Answer": "California",
-    "category": "Mystery",
-    "image": "images/california_1768974381012.jpg"
-  },
-  {
-    "question": "WHAT PERCENTAGE OF AMERICANS BELIEVE CHOCOLATE MILK COMES FROM BROWN COWS?",
-    "Answer": "7%",
-    "category": "Funny Facts",
-    "image": "images/7__1768974391313.jpg"
-  },
-  {
-    "question": "WHY DO US COINS HAVE RIDGED EDGES?",
-    "Answer": "To prevent cheating",
-    "category": "US Currency",
-    "image": "images/to_prevent_cheating_1768974399844.jpg"
+    "question": "WHICH PLANET IS CLOSEST TO THE SUN?",
+    "options": [
+      "Earth",
+      "Mercury",
+      "Venus",
+      "Mars"
+    ],
+    "correctIndex": 1,
+    "category": "Space",
+    "image": "images/mercury_1768993575140.jpg"
   }
 ]

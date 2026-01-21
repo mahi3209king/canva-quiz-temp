@@ -224,7 +224,7 @@ const AudioLogic: React.FC<{ quiz: any, audioUrls: any, isRevealed: boolean }> =
     return (
         <>
             {audioUrls?.question && <Audio src={staticFile(audioUrls.question)} />}
-            <Sequence from={15} durationInFrames={150}><Audio src={staticFile("audio/timer.mp3")} volume={0.5} /></Sequence>
+            <Sequence from={15} durationInFrames={150}><Audio src={staticFile("audio/timer.mp3")} volume={0.2} /></Sequence>
             <Sequence from={150}>
                 <Audio src={staticFile("audio/correct.mp3")} volume={0.8} />
                 {audioUrls?.answer && <Audio src={staticFile(audioUrls.answer)} />}

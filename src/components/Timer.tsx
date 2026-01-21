@@ -45,7 +45,7 @@ export const Timer: React.FC = () => {
                         cx={size / 2}
                         cy={size / 2}
                         r={radius}
-                        stroke={progress < 0.3 ? THEME.accent : THEME.primary}
+                        stroke={progress < 0.3 ? THEME.accent : THEME.correct}
                         strokeWidth={strokeWidth}
                         fill="transparent"
                         strokeDasharray={circumference}

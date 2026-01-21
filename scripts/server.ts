@@ -30,7 +30,7 @@ const upload = multer({ storage });
 // API: Save Quiz Data
 app.post('/api/save-quiz', upload.fields([{ name: 'bgm', maxCount: 1 }, { name: 'bgImage', maxCount: 1 }]), (req: express.Request, res: express.Response) => {
   try {
-    const { questions, templateId, endScreenMessage, introHook } = JSON.parse(req.body.data);
+    const { questions, templateId, endScreenMessage, introHook, interactiveLine, interactiveQuestionIndex } = JSON.parse(req.body.data);
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     
     // ... paths ...
@@ -47,6 +47,8 @@ app.post('/api/save-quiz', upload.fields([{ name: 'bgm', maxCount: 1 }, { name: 
     if (templateId) configData.templateId = templateId;
     if (endScreenMessage) configData.endScreenMessage = endScreenMessage;
     if (introHook !== undefined) configData.introHook = introHook;
+    if (interactiveLine !== undefined) configData.interactiveLine = interactiveLine;
+    if (interactiveQuestionIndex !== undefined) configData.interactiveQuestionIndex = interactiveQuestionIndex;
     
     fs.writeFileSync('src/data/config.json', JSON.stringify(configData, null, 2));
 
@@ -64,7 +66,7 @@ const cleanupFiles = () => {
   directories.forEach(dir => {
     if (!fs.existsSync(dir)) return;
     fs.readdirSync(dir).forEach(file => {
-      if (file.startsWith('q_') || file.startsWith('a_') || file.startsWith('intro_hook') || file.startsWith('bgm-') || file.startsWith('bgImage-')) {
+      if (file.startsWith('q_') || file.startsWith('a_') || file.startsWith('intro_hook') || file.startsWith('interactive_line') || file.startsWith('bgm-') || file.startsWith('bgImage-')) {
         try {
           fs.unlinkSync(path.join(dir, file));
         } catch (e) {
@@ -75,7 +77,15 @@ const cleanupFiles = () => {
   });
 
   // Reset config.json to defaults
-  const defaultConfig = { bgm: null, bgImage: null, templateId: "modern_dark", endScreenMessage: "Comment your score below!", introHook: null };
+  const defaultConfig = { 
+    bgm: null, 
+    bgImage: null, 
+    templateId: "modern_dark", 
+    endScreenMessage: "Comment your score below!", 
+    introHook: null,
+    interactiveLine: null,
+    interactiveQuestionIndex: null
+  };
   fs.writeFileSync('src/data/config.json', JSON.stringify(defaultConfig, null, 2));
   console.log('✨ Cleanup complete!');
 };
