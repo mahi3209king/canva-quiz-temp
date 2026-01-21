@@ -1,0 +1,39 @@
+name: Daily Quiz Automation 🚀
+
+on:
+  schedule:
+    - cron: '30 11 * * *' # 5:00 PM IST (11:30 UTC)
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  render-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Setup Chrome (for Remotion)
+        run: npx remotion browser install
+
+      - name: Run Automation Pipeline
+        run: npx tsx scripts/automate.ts
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+          YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+          YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+
+      - name: Upload Artifacts (Videos)
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-videos
+          path: out/*.mp4

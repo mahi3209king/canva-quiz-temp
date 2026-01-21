@@ -30,29 +30,26 @@ const upload = multer({ storage });
 // API: Save Quiz Data
 app.post('/api/save-quiz', upload.fields([{ name: 'bgm', maxCount: 1 }, { name: 'bgImage', maxCount: 1 }]), (req: express.Request, res: express.Response) => {
   try {
-    const { questions, templateId, endScreenMessage, introHook, interactiveLine, interactiveQuestionIndex } = JSON.parse(req.body.data);
+    const { queue, global } = JSON.parse(req.body.data);
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     
-    // ... paths ...
-    const bgmPath = files.bgm ? `audio/${files.bgm[0].filename}` : null;
-    const bgImagePath = files.bgImage ? `images/${files.bgImage[0].filename}` : null;
+    // Save Queue
+    fs.writeFileSync('src/data/video_queue.json', JSON.stringify(queue, null, 2));
 
-    // Update quizzes.json
-    fs.writeFileSync('src/data/quizzes.json', JSON.stringify(questions, null, 2));
-
-    // Update config.json
+    // Update Global Config
     const configData = JSON.parse(fs.readFileSync('src/data/config.json', 'utf8'));
-    if (bgmPath) configData.bgm = bgmPath;
-    if (bgImagePath) configData.bgImage = bgImagePath;
-    if (templateId) configData.templateId = templateId;
-    if (endScreenMessage) configData.endScreenMessage = endScreenMessage;
-    if (introHook !== undefined) configData.introHook = introHook;
-    if (interactiveLine !== undefined) configData.interactiveLine = interactiveLine;
-    if (interactiveQuestionIndex !== undefined) configData.interactiveQuestionIndex = interactiveQuestionIndex;
+    
+    const bgmPath = files.bgm ? `audio/${files.bgm[0].filename}` : configData.bgm;
+    const bgImagePath = files.bgImage ? `images/${files.bgImage[0].filename}` : configData.bgImage;
+
+    configData.bgm = bgmPath;
+    configData.bgImage = bgImagePath;
+    configData.introHook = global.introHook;
+    configData.endScreenMessage = global.endScreenMessage;
     
     fs.writeFileSync('src/data/config.json', JSON.stringify(configData, null, 2));
 
-    res.json({ success: true, message: 'Settings saved! Audio generation starting...' });
+    res.json({ success: true, message: 'Queue synchronized successfully!' });
   } catch (err: any) {
     console.error(err);
     res.status(500).json({ success: false, error: err.message });
@@ -110,18 +107,18 @@ app.post('/api/render', (req: express.Request, res: express.Response) => {
       }
       console.log('🖼️ Image setup step finished.');
       
-      // 3. Bulk Render
-      exec('npm run bulk-render', (renderErr, renderStdout, renderStderr) => {
+      // 3. Queue Automation
+      exec('npm run automate', (renderErr, renderStdout, renderStderr) => {
         if (renderErr) {
-          console.error('❌ Render Error:', renderStderr || renderStdout);
+          console.error('❌ Automation Error:', renderStderr || renderStdout);
           // Still cleanup to avoid leaving trash
           cleanupFiles();
-          return res.status(500).json({ success: false, error: 'Video rendering failed. Check console for details.' });
+          return res.status(500).json({ success: false, error: 'Video automation failed. Check console for details.' });
         }
         
         cleanupFiles();
-        console.log('✅ Render complete!');
-        res.json({ success: true, message: 'Videos rendered successfully! Check the "out" folder.' });
+        console.log('✅ Queue processed!');
+        res.json({ success: true, message: 'All videos in queue processed successfully!' });
       });
     });
   });

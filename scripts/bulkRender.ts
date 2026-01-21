@@ -19,7 +19,7 @@ const start = async () => {
 
   // --- 🎬 Render Full Quiz Video ---
   const config = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/data/config.json'), 'utf8'));
-  const isLandscape = config.templateId === 'landscape_industrial';
+  const isLandscape = config.videoType === 'long';
   const compositionId = isLandscape ? 'FullLandscapeQuiz' : 'FullQuiz';
 
   console.log(`🎬 Rendering Full Quiz Video (${isLandscape ? 'Landscape' : 'Shorts'})...`);
