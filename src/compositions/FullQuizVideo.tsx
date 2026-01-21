@@ -3,12 +3,22 @@ import { Series } from 'remotion';
 import { QuizVideo } from './QuizVideo';
 import { EndScreen } from '../components/EndScreen';
 import quizzes from '../data/quizzes.json';
+import config from '../data/config.json';
 import { QuizData } from '../types';
+
 import { TIMING } from '../styles/theme';
+
+import { IntroHook } from '../components/IntroHook';
 
 export const FullQuizVideo: React.FC = () => {
     return (
         <Series>
+            {config.introHook && (
+                <Series.Sequence durationInFrames={TIMING.introHookDuration}>
+                    <IntroHook />
+                </Series.Sequence>
+            )}
+
             {quizzes.map((quiz: QuizData, index: number) => (
                 <Series.Sequence key={index} durationInFrames={TIMING.questionDuration}>
                     <QuizVideo

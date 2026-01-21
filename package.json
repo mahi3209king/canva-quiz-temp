@@ -8,10 +8,12 @@
         "render": "remotion render QuizVideo out/video.mp4",
         "bulk-render": "npx tsx scripts/bulkRender.ts",
         "setup-audio": "npx tsx scripts/setup-audio.ts",
+        "setup-images": "npx tsx scripts/setup-images.ts",
         "dashboard": "npx tsx scripts/server.ts",
         "typecheck": "tsc"
     },
     "dependencies": {
+        "@google/generative-ai": "^0.24.1",
         "@remotion/bundler": "4.0.400",
         "@remotion/cli": "4.0.400",
         "@remotion/google-fonts": "4.0.400",

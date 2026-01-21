@@ -20,6 +20,8 @@ export const TIMING = {
   revealDuration: 90,  // 3 seconds
   questionDuration: 240, // 150 + 90 = 8 seconds total per quiz
   endCardDuration: 90, // 3 seconds for the end screen
+  introHookDuration: 120, // 4 seconds for the intro hook
 };
+
 
 

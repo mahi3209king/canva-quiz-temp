@@ -30,7 +30,7 @@ const upload = multer({ storage });
 // API: Save Quiz Data
 app.post('/api/save-quiz', upload.fields([{ name: 'bgm', maxCount: 1 }, { name: 'bgImage', maxCount: 1 }]), (req: express.Request, res: express.Response) => {
   try {
-    const { questions, templateId, endScreenMessage } = JSON.parse(req.body.data);
+    const { questions, templateId, endScreenMessage, introHook } = JSON.parse(req.body.data);
     const files = req.files as { [fieldname: string]: Express.Multer.File[] };
     
     // ... paths ...
@@ -46,9 +46,9 @@ app.post('/api/save-quiz', upload.fields([{ name: 'bgm', maxCount: 1 }, { name: 
     if (bgImagePath) configData.bgImage = bgImagePath;
     if (templateId) configData.templateId = templateId;
     if (endScreenMessage) configData.endScreenMessage = endScreenMessage;
+    if (introHook !== undefined) configData.introHook = introHook;
     
     fs.writeFileSync('src/data/config.json', JSON.stringify(configData, null, 2));
-
 
     res.json({ success: true, message: 'Settings saved! Audio generation starting...' });
   } catch (err: any) {
@@ -57,20 +57,14 @@ app.post('/api/save-quiz', upload.fields([{ name: 'bgm', maxCount: 1 }, { name: 
   }
 });
 
-
 // Helper to cleanup temporary generated/uploaded files
 const cleanupFiles = () => {
   console.log('🧹 Cleaning up temporary files...');
-  
   const directories = ['public/audio', 'public/images'];
-  
   directories.forEach(dir => {
     if (!fs.existsSync(dir)) return;
-    
     fs.readdirSync(dir).forEach(file => {
-      // Delete generated speech (q_0, a_0, etc.)
-      // Delete uploaded user assets (bgm-*, bgImage-*)
-      if (file.startsWith('q_') || file.startsWith('a_') || file.startsWith('bgm-') || file.startsWith('bgImage-')) {
+      if (file.startsWith('q_') || file.startsWith('a_') || file.startsWith('intro_hook') || file.startsWith('bgm-') || file.startsWith('bgImage-')) {
         try {
           fs.unlinkSync(path.join(dir, file));
         } catch (e) {
@@ -80,11 +74,9 @@ const cleanupFiles = () => {
     });
   });
 
-  // Reset config.json to defaults (optional but cleaner)
-  const defaultConfig = { bgm: null, bgImage: null, templateId: "modern_dark", endScreenMessage: "Comment your score below!" };
+  // Reset config.json to defaults
+  const defaultConfig = { bgm: null, bgImage: null, templateId: "modern_dark", endScreenMessage: "Comment your score below!", introHook: null };
   fs.writeFileSync('src/data/config.json', JSON.stringify(defaultConfig, null, 2));
-
-  
   console.log('✨ Cleanup complete!');
 };
 
@@ -92,30 +84,39 @@ const cleanupFiles = () => {
 app.post('/api/render', (req: express.Request, res: express.Response) => {
   console.log('🎬 Rendering process started via dashboard...');
   
-  // First run audio setup
+  // 1. Audio Setup
   exec('npm run setup-audio', (audioErr, audioStdout, audioStderr) => {
     if (audioErr) {
-      console.error('Audio Setup Error:', audioStderr);
+      console.error('❌ Audio Setup Error:', audioStderr || audioStdout);
       return res.status(500).json({ success: false, error: 'Audio generation failed' });
     }
 
-    console.log('🎙️ Audio ready, starting render...');
+    console.log('🎙️ Audio ready, checking images...');
     
-    exec('npm run bulk-render', (renderErr, renderStdout, renderStderr) => {
-      // Run cleanup regardless of success/fail (or maybe only on success? Usually better to clean up anyway)
-      cleanupFiles();
-
-      if (renderErr) {
-        console.error('Render Error:', renderStderr);
-        return res.status(500).json({ success: false, error: 'Render failed' });
+    // 2. Image Setup
+    exec('npm run setup-images', (imgErr, imgStdout, imgStderr) => {
+      if (imgErr) {
+          console.warn('⚠️ Image Setup had issues, continuing anyway:', imgStderr);
       }
+      console.log('🖼️ Image setup step finished.');
       
-      console.log('✅ Render complete!');
-      res.json({ success: true, message: 'Videos rendered successfully! Check the "out" folder.' });
+      // 3. Bulk Render
+      exec('npm run bulk-render', (renderErr, renderStdout, renderStderr) => {
+        if (renderErr) {
+          console.error('❌ Render Error:', renderStderr || renderStdout);
+          // Still cleanup to avoid leaving trash
+          cleanupFiles();
+          return res.status(500).json({ success: false, error: 'Video rendering failed. Check console for details.' });
+        }
+        
+        cleanupFiles();
+        console.log('✅ Render complete!');
+        res.json({ success: true, message: 'Videos rendered successfully! Check the "out" folder.' });
+      });
     });
   });
-});
 
+});
 
 app.listen(port, () => {
   console.log(`🚀 Admin Dashboard Server at http://localhost:${port}`);

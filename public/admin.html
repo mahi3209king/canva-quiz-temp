@@ -69,10 +69,20 @@
                 <section class="glass p-8 rounded-[32px] shadow-2xl">
                     <h2 class="text-xl font-bold flex items-center gap-3 text-amber-400 mb-6">
                         <span class="bg-amber-500 w-7 h-7 rounded-full flex items-center justify-center text-xs text-white">2</span>
-                        End Screen Message
+                        Intro Hook & End Screen
                     </h2>
-                    <input type="text" id="endScreenMessage" class="w-full bg-slate-900/50 border border-slate-800 rounded-2xl p-4 text-sm text-amber-300 focus:outline-none focus:border-amber-500" placeholder="e.g., Comment your score below!">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-white/30 mb-2">Intro Hook (Line by line, optional)</label>
+                            <textarea id="introHook" class="w-full bg-slate-900/50 border border-slate-800 rounded-2xl p-4 text-sm text-sky-300 focus:outline-none focus:border-sky-500" rows="2" placeholder="e.g., 4 out of 6 people fail&#10;answer to all question"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black uppercase text-white/30 mb-2">End Screen Message</label>
+                            <input type="text" id="endScreenMessage" class="w-full bg-slate-900/50 border border-slate-800 rounded-2xl p-4 text-sm text-amber-300 focus:outline-none focus:border-amber-500" placeholder="e.g., Comment your score below!">
+                        </div>
+                    </div>
                 </section>
+
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <section class="glass p-6 rounded-[28px]">
@@ -304,7 +314,9 @@
             ];
             document.getElementById('quizData').value = JSON.stringify(sample, null, 2);
             document.getElementById('endScreenMessage').value = "Comment your score below!";
+            document.getElementById('introHook').value = "4 out of 6 people fail\nanswer to all question";
         }
+
 
 
 
@@ -331,8 +343,10 @@
                 formData.append('data', JSON.stringify({ 
                     questions: JSON.parse(quizData),
                     templateId: activeTemplateId,
-                    endScreenMessage: endScreenMessage
+                    endScreenMessage: endScreenMessage,
+                    introHook: document.getElementById('introHook').value
                 }));
+
                 if (bgm) formData.append('bgm', bgm);
                 if (bgImage) formData.append('bgImage', bgImage);
 

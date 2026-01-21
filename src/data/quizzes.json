@@ -1,62 +1,62 @@
 [
   {
-    "question": "WHICH US STATE HAS MORE COWS THAN PEOPLE?",
-    "Answer": "Wyoming",
+    "question": "WHICH US PRESIDENT WAS A PROFESSIONAL WRESTLING PROMOTER?",
+    "Answer": "Donald Trump",
+    "category": "US Politics",
+    "image": "images/donald_trump_1768974319905.jpg"
+  },
+  {
+    "question": "WHICH STATE PRODUCES THE MOST POPCORN IN THE US?",
+    "Answer": "Nebraska",
+    "category": "US Agriculture",
+    "image": "images/nebraska_1768974331876.jpg"
+  },
+  {
+    "question": "WHAT IS THE MOST COMMON PASSWORD IN THE US?",
+    "Answer": "123456",
+    "category": "Cyber Security",
+    "image": "images/123456_1768974339843.jpg"
+  },
+  {
+    "question": "WHICH US STATE HAS MORE SHORELINE THAN CALIFORNIA?",
+    "Answer": "Alaska",
     "category": "US Geography",
-    "image": "images/wyoming-cows.jpg"
+    "image": "images/alaska_1768974346980.jpg"
   },
   {
-    "question": "WHAT WAS THE ORIGINAL NAME OF GOOGLE?",
-    "Answer": "BackRub",
-    "category": "Technology",
-    "image": "images/google-backrub.jpg"
+    "question": "WHAT WAS THE FIRST FAST-FOOD CHAIN IN THE US?",
+    "Answer": "White Castle",
+    "category": "Food History",
+    "image": "images/white_castle_1768974354598.jpg"
   },
   {
-    "question": "WHICH US PRESIDENT NEVER LIVED IN THE WHITE HOUSE?",
-    "Answer": "George Washington",
-    "category": "US History",
-    "image": "images/george-washington.jpeg"
-  },
-  {
-    "question": "WHICH US STATE HAS THE LONGEST OFFICIAL NAME?",
-    "Answer": "Rhode Island",
-    "category": "US Geography",
-    "image": "images/rhode-island.jpeg"
-  },
-  {
-    "question": "WHAT IS THE MOST STOLEN FOOD ITEM IN THE US?",
-    "Answer": "Cheese",
-    "category": "Fun Facts",
-    "image": "images/cheese.jpeg"
-  },
-  {
-    "question": "WHICH AMERICAN INVENTION WAS CREATED BY ACCIDENT?",
-    "Answer": "Microwave oven",
-    "category": "Inventions",
-    "image": "images/microwave.jpeg"
-  },
-  {
-    "question": "WHICH US CITY HAS THE MOST BRIDGES?",
-    "Answer": "Pittsburgh",
+    "question": "WHICH AMERICAN CITY IS SLOWLY SINKING EVERY YEAR?",
+    "Answer": "New Orleans",
     "category": "US Cities",
-    "image": "images/pittsburgh-bridges.jpg"
+    "image": "images/new_orleans_1768974365191.jpg"
   },
   {
-    "question": "WHICH LETTER IS NOT USED IN ANY US STATE NAME?",
-    "Answer": "Q",
-    "category": "Fun Facts",
-    "image": "images/letter-q.png"
+    "question": "WHAT IS THE OFFICIAL NATIONAL ANIMAL OF THE US?",
+    "Answer": "Bald Eagle",
+    "category": "US Symbols",
+    "image": "images/bald_eagle_1768974373742.jpg"
   },
   {
-    "question": "WHICH US STATE HAS NO SALES TAX?",
-    "Answer": "Oregon",
-    "category": "US Economy",
-    "image": "images/oregon.png"
+    "question": "WHICH US STATE HAS THE MOST UFO SIGHTINGS?",
+    "Answer": "California",
+    "category": "Mystery",
+    "image": "images/california_1768974381012.jpg"
   },
   {
-    "question": "WHAT WAS COCA-COLA’S ORIGINAL COLOR?",
-    "Answer": "Clear",
-    "category": "Brands",
-    "image": "images/coca-cola.jpg"
+    "question": "WHAT PERCENTAGE OF AMERICANS BELIEVE CHOCOLATE MILK COMES FROM BROWN COWS?",
+    "Answer": "7%",
+    "category": "Funny Facts",
+    "image": "images/7__1768974391313.jpg"
+  },
+  {
+    "question": "WHY DO US COINS HAVE RIDGED EDGES?",
+    "Answer": "To prevent cheating",
+    "category": "US Currency",
+    "image": "images/to_prevent_cheating_1768974399844.jpg"
   }
 ]
