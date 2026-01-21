@@ -8,6 +8,7 @@
         "render": "remotion render QuizVideo out/video.mp4",
         "bulk-render": "npx tsx scripts/bulkRender.ts",
         "setup-audio": "npx tsx scripts/setup-audio.ts",
+        "dashboard": "npx tsx scripts/server.ts",
         "typecheck": "tsc"
     },
     "dependencies": {
@@ -16,14 +17,23 @@
         "@remotion/google-fonts": "4.0.400",
         "@remotion/renderer": "4.0.400",
         "axios": "^1.4.0",
+        "body-parser": "^2.2.2",
+        "child_process": "^1.0.2",
+        "cors": "^2.8.5",
         "dotenv": "^16.3.1",
+        "express": "^5.2.1",
         "google-tts-api": "^2.0.2",
         "lucide-react": "^0.263.1",
+        "multer": "^2.0.2",
         "react": "^18.0.0",
         "react-dom": "^18.0.0",
         "remotion": "4.0.400"
     },
     "devDependencies": {
+        "@types/body-parser": "^1.19.6",
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.6",
+        "@types/multer": "^2.0.0",
         "@types/node": "^20.0.0",
         "@types/react": "^18.0.0",
         "@types/react-dom": "^18.0.0",

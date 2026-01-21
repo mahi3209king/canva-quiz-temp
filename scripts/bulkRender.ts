@@ -23,16 +23,8 @@ const start = async () => {
     fs.mkdirSync('out');
   }
 
-  // Pre-generate all audio
-  console.log('🎙️ Generating voiceovers...');
-  for (let i = 0; i < quizzes.length; i++) {
-    const quiz = quizzes[i];
-    await generateTTS(quiz.question, `q_${i}.mp3`, 'gtts');
-    await generateTTS(`The correct answer is: ${quiz.options[quiz.correctIndex]}`, `a_${i}.mp3`, 'gtts');
-    console.log(`✅ Audio for Question ${i + 1} ready.`);
-  }
-
   // Render Full Quiz Video
+
   console.log('🎬 Rendering Full Quiz Video...');
   const fullOutput = path.join(process.cwd(), `out/full_quiz.mp4`);
   const fullComposition = await selectComposition({

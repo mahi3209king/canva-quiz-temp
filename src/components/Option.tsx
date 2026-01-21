@@ -1,84 +1,85 @@
 import React from 'react';
-import { interpolate, useCurrentFrame, spring, useVideoConfig } from 'remotion';
+import { useCurrentFrame, spring } from 'remotion';
 import { THEME } from '../styles/theme';
 import { CheckCircle2, Circle } from 'lucide-react';
 
 interface OptionProps {
     text: string;
     index: number;
-    isSelected: boolean;
-    isCorrect: boolean;
-    reveal: boolean;
+    isSelected?: boolean;
+    isCorrect?: boolean;
+    reveal?: boolean;
+    isUSA?: boolean;
 }
 
-export const Option: React.FC<OptionProps> = ({ text, index, isCorrect, reveal }) => {
+export const Option: React.FC<OptionProps> = ({ text, index, isCorrect, reveal, isUSA }) => {
     const frame = useCurrentFrame();
-    const { fps } = useVideoConfig();
 
-    // Staggered entrance
-    const startFrame = index * 5 + 15;
-    const entrance = spring({
-        frame: frame - startFrame,
-        fps,
-        config: { damping: 12, stiffness: 100 },
-    });
+    const letter = String.fromCharCode(65 + index);
+    const isAnswer = reveal && isCorrect;
 
-    const revealSpring = spring({
-        frame: frame - 165,
-        fps,
+    const scale = spring({
+        frame,
+        fps: 30,
         config: { damping: 12 },
+        delay: index * 5
     });
 
-    const backgroundColor = reveal && isCorrect
-        ? THEME.correct
-        : THEME.surface;
+    const getColors = () => {
+        if (!reveal) return { bg: 'rgba(255,255,255,0.05)', border: 'rgba(255,255,255,0.1)', text: '#fff' };
+        if (isCorrect) return { bg: THEME.correct, border: '#fff', text: '#fff' };
+        return { bg: 'rgba(255,255,255,0.02)', border: 'rgba(255,255,255,0.05)', text: 'rgba(255,255,255,0.3)' };
+    };
 
-    const borderColor = reveal && isCorrect
-        ? THEME.correct
-        : THEME.surfaceBorder;
-
-    const scale = interpolate(entrance, [0, 1], [0.8, 1]);
-    const opacity = interpolate(entrance, [0, 1], [0, 1]);
+    const colors = getColors();
 
     return (
-        <div
-            style={{
-                width: '90%',
-                padding: '30px',
-                margin: '12px 0',
-                backgroundColor,
-                borderRadius: '24px',
-                color: reveal && isCorrect ? '#000' : THEME.text,
-                fontSize: '44px',
-                fontWeight: '700',
+        <div style={{
+            width: '100%',
+            padding: '24px 30px',
+            marginBottom: '20px',
+            backgroundColor: colors.bg,
+            borderRadius: isUSA ? '12px' : '24px',
+            border: `2px solid ${colors.border}`,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '25px',
+            transform: `scale(${scale})`,
+            boxShadow: isAnswer ? `0 0 40px ${THEME.correct}44` : 'none',
+            transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+            position: 'relative',
+            overflow: 'hidden'
+        }}>
+            <div style={{
+                width: '50px',
+                height: '50px',
+                borderRadius: isUSA ? '8px' : '50%',
+                backgroundColor: isAnswer ? '#fff' : 'rgba(255,255,255,0.1)',
                 display: 'flex',
+                justifyContent: 'center',
                 alignItems: 'center',
-                justifyContent: 'space-between',
-                border: `3px solid ${borderColor}`,
-                opacity,
-                transform: `scale(${scale})`,
-                boxShadow: reveal && isCorrect ? `0 0 40px ${THEME.correct}66` : 'none',
-                backdropFilter: 'blur(5px)',
-                transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-            }}
-        >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-                <div style={{
-                    width: '50px',
-                    height: '50px',
-                    borderRadius: '12px',
-                    backgroundColor: reveal && isCorrect ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    fontSize: '24px'
-                }}>
-                    {String.fromCharCode(65 + index)}
-                </div>
+                fontSize: '24px',
+                fontWeight: '900',
+                color: isAnswer ? THEME.correct : '#fff',
+                flexShrink: 0
+            }}>
+                {letter}
+            </div>
+
+            <div style={{
+                fontSize: '32px',
+                fontWeight: '700',
+                color: colors.text,
+                flex: 1
+            }}>
                 {text}
             </div>
-            {reveal && isCorrect && <CheckCircle2 size={32} />}
-            {!reveal && <Circle size={32} opacity={0.2} />}
+
+            {reveal && isCorrect && (
+                <div style={{ color: '#fff' }}>
+                    <CheckCircle2 size={32} />
+                </div>
+            )}
         </div>
     );
 };

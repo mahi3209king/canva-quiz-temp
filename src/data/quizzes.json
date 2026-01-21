@@ -1,35 +1,62 @@
 [
-    {
-        "question": "Which planet is known as the Red Planet?",
-        "options": [
-            "Earth",
-            "Mars",
-            "Jupiter",
-            "Saturn"
-        ],
-        "correctIndex": 1,
-        "category": "Space"
-    },
-    {
-        "question": "What is the capital of France?",
-        "options": [
-            "London",
-            "Berlin",
-            "Paris",
-            "Madrid"
-        ],
-        "correctIndex": 2,
-        "category": "Geography"
-    },
-    {
-        "question": "Which animal is the fastest in the world?",
-        "options": [
-            "Lion",
-            "Cheetah",
-            "Eagle",
-            "Shark"
-        ],
-        "correctIndex": 1,
-        "category": "Nature"
-    }
+  {
+    "question": "WHICH US STATE HAS MORE COWS THAN PEOPLE?",
+    "Answer": "Wyoming",
+    "category": "US Geography",
+    "image": "images/wyoming-cows.jpg"
+  },
+  {
+    "question": "WHAT WAS THE ORIGINAL NAME OF GOOGLE?",
+    "Answer": "BackRub",
+    "category": "Technology",
+    "image": "images/google-backrub.jpg"
+  },
+  {
+    "question": "WHICH US PRESIDENT NEVER LIVED IN THE WHITE HOUSE?",
+    "Answer": "George Washington",
+    "category": "US History",
+    "image": "images/george-washington.jpeg"
+  },
+  {
+    "question": "WHICH US STATE HAS THE LONGEST OFFICIAL NAME?",
+    "Answer": "Rhode Island",
+    "category": "US Geography",
+    "image": "images/rhode-island.jpeg"
+  },
+  {
+    "question": "WHAT IS THE MOST STOLEN FOOD ITEM IN THE US?",
+    "Answer": "Cheese",
+    "category": "Fun Facts",
+    "image": "images/cheese.jpeg"
+  },
+  {
+    "question": "WHICH AMERICAN INVENTION WAS CREATED BY ACCIDENT?",
+    "Answer": "Microwave oven",
+    "category": "Inventions",
+    "image": "images/microwave.jpeg"
+  },
+  {
+    "question": "WHICH US CITY HAS THE MOST BRIDGES?",
+    "Answer": "Pittsburgh",
+    "category": "US Cities",
+    "image": "images/pittsburgh-bridges.jpg"
+  },
+  {
+    "question": "WHICH LETTER IS NOT USED IN ANY US STATE NAME?",
+    "Answer": "Q",
+    "category": "Fun Facts",
+    "image": "images/letter-q.png"
+  },
+  {
+    "question": "WHICH US STATE HAS NO SALES TAX?",
+    "Answer": "Oregon",
+    "category": "US Economy",
+    "image": "images/oregon.png"
+  },
+  {
+    "question": "WHAT WAS COCA-COLA’S ORIGINAL COLOR?",
+    "Answer": "Clear",
+    "category": "Brands",
+    "image": "images/coca-cola.jpg"
+  }
 ]

@@ -14,8 +14,9 @@ registerRoot(() => {
       <Composition
         id="SingleQuiz"
         component={QuizVideo}
-        durationInFrames={300}
+        durationInFrames={TIMING.questionDuration}
         fps={TIMING.fps}
+
         width={1080}
         height={1920}
         defaultProps={{
@@ -32,8 +33,9 @@ registerRoot(() => {
       <Composition
         id="FullQuiz"
         component={FullQuizVideo}
-        durationInFrames={quizData.length * 300}
+        durationInFrames={(quizData.length * TIMING.questionDuration) + TIMING.endCardDuration}
         fps={TIMING.fps}
+
         width={1080}
         height={1920}
       />
